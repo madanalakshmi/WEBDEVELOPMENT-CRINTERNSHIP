@@ -1,0 +1,75 @@
+resume_builder/
+    templates/
+        index.html
+    static/
+        styles.css
+    app.py
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Builder</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Resume Builder</h1>
+    <form action="/generate" method="post">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <!-- Add more input fields for resume content here -->
+
+        <button type="submit">Generate Resume</button>
+    </form>
+
+    <div id="resume-preview">
+        <!-- Display the generated resume here -->
+    </div>
+</body>
+</html>
+body {
+    font-family: Arial, sans-serif;
+}
+
+form {
+    width: 60%;
+    margin: 0 auto;
+}
+
+label, input {
+    display: block;
+    margin-bottom: 10px;
+}
+
+button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+#resume-preview {
+    margin-top: 20px;
+}
+from flask import Flask, render_template, request
+
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/generate', methods=['POST'])
+def generate_resume():
+    name = request.form['name']
+    # Get other form data and generate the resume here
+
+    # For simplicity, let's just return a basic template
+    resume_html = f"<h2>{name}</h2>"
+
+    return resume_html
+
+if __name__ == '__main__':
+    app.run(debug=True)
